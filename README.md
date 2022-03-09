@@ -1,46 +1,32 @@
-# Quickly send a message to Slack
+# Quickly send a message to MS Teams
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-slack-alerts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-alerts)
-[![run-tests](https://github.com/spatie/laravel-slack-alerts/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/run-tests.yml)
-[![PHPStan](https://github.com/spatie/laravel-slack-alerts/actions/workflows/phpstan.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/phpstan.yml)
-[![Check & fix styling](https://github.com/spatie/laravel-slack-alerts/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/php-cs-fixer.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-alerts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-alerts)
-
-This package can quickly send alerts to Slack. You can use this to notify yourself of any noteworthy events happening in your app.
+This package can quickly send alerts to Microsoft Teams. You can use this to notify yourself of any noteworthy events happening in your Laravel app.  This is a fork of Spatie's [laravel-slack-alerts](https://github.com/spatie/laravel-slack-alerts) so all thanks to them for doing the main bulk of the work.  I've pretty much just changed 'Slack' to 'MSTeams'.
 
 ```php
-use Spatie\SlackAlerts\Facades\SlackAlert;
+use Ohffs\MSTeamsAlerts\Facades\MSTeamsAlert;
 
-SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
+MSTeamsAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
-Under the hood, a job is used to communicate with Slack. This prevents your app from failing in case Slack is down.
+Under the hood, a job is used to communicate with MS Teams. This prevents your app from failing in case Teams is down.
 
-Want to send alerts to Discord instead? Check out [laravel-discord-alerts](https://github.com/spatie/laravel-discord-alerts).
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-slack-alerts.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-slack-alerts)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Want to send alerts to Discord or Slack instead? Check out [laravel-discord-alerts](https://github.com/spatie/laravel-discord-alerts) and [laravel-slack-alerts](https://github.com/spatie/laravel-slack-alerts).
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-slack-alerts
+composer require ohffs/laravel-msteams-alerts
 ```
 
-You can set a `SLACK_ALERT_WEBHOOK` env variable containing a valid Slack webhook URL. You can learn how to get a webhook URL [in the Slack API docs](https://api.slack.com/messaging/webhooks).
+You can set a `MSTEAMS_ALERT_WEBHOOK` env variable containing a valid Teams webhook URL. You can learn how to get a webhook URL [in the Teams docs](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
 
 
 Alternatively, you can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="slack-alerts-config"
+php artisan vendor:publish --tag="msteams-alerts-config"
 ```
 
 This is the contents of the published config file:
@@ -48,27 +34,27 @@ This is the contents of the published config file:
 ```php
 return [
     /*
-     * The webhook URLs that we'll use to send a message to Slack.
+     * The webhook URLs that we'll use to send a message to Teams.
      */
     'webhook_urls' => [
-        'default' => env('SLACK_ALERT_WEBHOOK'),
+        'default' => env('MSTEAMS_ALERT_WEBHOOK'),
     ],
 
     /*
-     * This job will send the message to Slack. You can extend this
+     * This job will send the message to Teams. You can extend this
      * job to set timeouts, retries, etc...
      */
-    'job' => Spatie\SlackAlerts\Jobs\SendToSlackChannelJob::class,
+    'job' => Ohffs\MSTeamsAlerts\Jobs\SendToMSTeamsChannelJob::class,
 ];
 
 ```
 
 ## Usage
 
-To send a message to Slack, simply call `SlackAlert::message()` and pass it any message you want.
+To send a message to Teams, simply call `MSTeamsAlert::message()` and pass it any message you want.
 
 ```php
-SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
+MSTeamsAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ## Using multiple webhooks
@@ -76,20 +62,20 @@ SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsle
 You can also use an alternative webhook, by specify extra ones in the config file.
 
 ```php
-// in config/slack-alerts.php
+// in config/msteams-alerts.php
 
 'webhook_urls' => [
-    'default' => 'https://hooks.slack.com/services/XXXXXX',
-    'marketing' => 'https://hooks.slack.com/services/YYYYYY',
+    'default' => 'https://hooks.office.com/services/XXXXXX',
+    'marketing' => 'https://hooks.office.com/services/YYYYYY',
 ],
 ```
 
 The webhook to be used can be chosen using the `to` function.
 
 ```php
-use Spatie\SlackAlerts\Facades\SlackAlert;
+use Ohffs\MSTeamsAlerts\Facades\MSTeamsAlert;
 
-SlackAlert::to('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
+MSTeamsAlert::to('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ### Using a custom webhooks
@@ -97,35 +83,9 @@ SlackAlert::to('marketing')->message("You have a new subscriber to the {$newslet
 The `to` function also supports custom webhook urls.
 
 ```php
-use Spatie\SlackAlerts\Facades\SlackAlert;
+use Ohffs\MSTeamsAlerts\Facades\MSTeamsAlert;
 
-SlackAlert::to('https://custom-url.com')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
-```
-
-## Formatting
-
-### Markdown
-You can format your messages with Slack's markup. Learn how [in the Slack API docs](https://slack.com/help/articles/202288908-Format-your-messages).
-
-```php
-use Spatie\SlackAlerts\Facades\SlackAlert;
-
-SlackAlert::message("A message *with some bold statements* and _some italicized text_.");
-```
-
-Links are formatted differently in Slack than the classic markdown structure.
-
-```php
-SlackAlert::message("<https://spatie.be|This is a link to our homepage>");
-```
-
-### Emoji's
-
-You can use the same emoji codes as in Slack. This means custom emoji's are also supported.
-```php
-use Spatie\SlackAlerts\Facades\SlackAlert;
-
-SlackAlert::message(":smile: :custom-code:");
+MSTeamsAlert::to('https://custom-url.com')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ## Testing
@@ -148,6 +108,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
+- Ohffs
 - [Niels Vanpachtenbeke](https://github.com/Nielsvanpach)
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
@@ -155,7 +116,3 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Alternatives
-
-If you want to send rich messages with Block Kit, we suggest using [slack-php/slack-php-block-kit](https://github.com/slack-php/slack-php-block-kit)
