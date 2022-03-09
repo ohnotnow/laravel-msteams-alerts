@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\SlackAlerts\Exceptions;
+namespace Ohffs\MSTeamsAlerts\Exceptions;
 
 use RuntimeException;
 

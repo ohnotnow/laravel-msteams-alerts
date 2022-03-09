@@ -1,23 +1,23 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace Ohffs\MSTeamsAlerts;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class SlackAlertsServiceProvider extends PackageServiceProvider
+class MSTeamsAlertsServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('laravel-slack-alerts')
+            ->name('laravel-msteams-alerts')
             ->hasConfigFile();
     }
 
     public function packageRegistered(): void
     {
-        $this->app->bind('laravel-slack-alerts', function () {
-            return new SlackAlert();
+        $this->app->bind('laravel-msteams-alerts', function () {
+            return new MSTeamsAlert();
         });
     }
 }

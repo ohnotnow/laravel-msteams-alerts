@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace Ohffs\MSTeamsAlerts;
 
-use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
-use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
+use Ohffs\MSTeamsAlerts\Exceptions\JobClassDoesNotExist;
+use Ohffs\MSTeamsAlerts\Exceptions\WebhookUrlNotValid;
+use Ohffs\MSTeamsAlerts\Jobs\SendToMSTeamsChannelJob;
 
 class Config
 {
-    public static function getJob(array $arguments): SendToSlackChannelJob
+    public static function getJob(array $arguments): SendToMSTeamsChannelJob
     {
-        $jobClass = config('slack-alerts.job');
+        $jobClass = config('msteams-alerts.job');
 
         if (is_null($jobClass) || ! class_exists($jobClass)) {
             throw JobClassDoesNotExist::make($jobClass);
@@ -25,7 +25,7 @@ class Config
             return $name;
         }
 
-        $url = config("slack-alerts.webhook_urls.{$name}");
+        $url = config("msteams-alerts.webhook_urls.{$name}");
 
         if (is_null($url)) {
             return null;

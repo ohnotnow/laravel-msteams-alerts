@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\SlackAlerts\Facades;
+namespace Ohffs\MSTeamsAlerts\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static self to(string $text)
  * @method static void message(string $text)
  *
- * @see \Spatie\SlackAlerts\SlackAlert
+ * @see \Ohffs\MSTeamsAlerts\SlackAlert
  */
-class SlackAlert extends Facade
+class MSTeamsAlert extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'laravel-slack-alerts';
+        return 'laravel-msteams-alerts';
     }
 }

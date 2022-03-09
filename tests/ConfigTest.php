@@ -1,9 +1,9 @@
 <?php
 
-use Spatie\SlackAlerts\Config;
+use Ohffs\MSTeamsAlerts\Config;
 
 beforeEach(function () {
-    config()->set('slack-alerts.webhook_urls.default', 'https://default-domain.com');
+    config()->set('msteams-alerts.webhook_urls.default', 'https://default-domain.com');
 });
 
 it('can get a webhook url', function (string $name, string $result) {

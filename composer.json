@@ -1,14 +1,19 @@
 {
-    "name": "spatie/laravel-slack-alerts",
-    "description": "Send a message to Slack",
+    "name": "ohffs/laravel-msteams-alerts",
+    "description": "Send a message to MS Teams",
     "keywords": [
+        "ohffs",
         "spatie",
         "laravel",
-        "laravel-slack-alerts"
+        "laravel-msteams-alerts"
     ],
-    "homepage": "https://github.com/spatie/laravel-slack-alerts",
+    "homepage": "https://github.com/ohnotnow/laravel-msteams-alerts",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Ohffs",
+            "email": "ohffsnotnow@gmail.com"
+        },
         {
             "name": "Niels Vanpachtenbeke",
             "email": "niels@spatie.be",
@@ -39,13 +44,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\SlackAlerts\\": "src",
-            "Spatie\\SlackAlerts\\Database\\Factories\\": "database/factories"
+            "Ohffs\\MSTeamsAlerts\\": "src",
+            "Ohffs\\MSTeamsAlerts\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\SlackAlerts\\Tests\\": "tests"
+            "Ohffs\\MSTeamsAlerts\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -63,10 +68,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\SlackAlerts\\SlackAlertsServiceProvider"
+                "Ohffs\\MSTeamsAlerts\\MSTeamsAlertsServiceProvider"
             ],
             "aliases": {
-                "Slack": "SlackAlert"
+                "MSTeams": "MSTeamsAlert"
             }
         }
     },

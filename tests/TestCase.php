@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\SlackAlerts\Tests;
+namespace Ohffs\MSTeamsAlerts\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\SlackAlerts\SlackAlertsServiceProvider;
+use Ohffs\MSTeamsAlerts\MSTeamsAlertsServiceProvider;
 
 class TestCase extends Orchestra
 {
     protected function getPackageProviders($app): array
     {
         return [
-            SlackAlertsServiceProvider::class,
+            MSTeamsAlertsServiceProvider::class,
         ];
     }
 }

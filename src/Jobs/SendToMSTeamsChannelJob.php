@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\SlackAlerts\Jobs;
+namespace Ohffs\MSTeamsAlerts\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class SendToSlackChannelJob implements ShouldQueue
+class SendToMSTeamsChannelJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

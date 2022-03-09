@@ -1,55 +1,55 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
-use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
-use Spatie\SlackAlerts\Facades\SlackAlert;
-use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
+use Ohffs\MSTeamsAlerts\Exceptions\JobClassDoesNotExist;
+use Ohffs\MSTeamsAlerts\Exceptions\WebhookUrlNotValid;
+use Ohffs\MSTeamsAlerts\Facades\MSTeamsAlert;
+use Ohffs\MSTeamsAlerts\Jobs\SendToMSTeamsChannelJob;
 
 beforeEach(function () {
     Bus::fake();
 });
 
-it('can dispatch a job to send a message to slack using the default webhook url', function () {
-    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+it('can dispatch a job to send a message to msteams using the default webhook url', function () {
+    config()->set('msteams-alerts.webhook_urls.default', 'https://test-domain.com');
 
-    SlackAlert::message('test-data');
+    MSTeamsAlert::message('test-data');
 
-    Bus::assertDispatched(SendToSlackChannelJob::class);
+    Bus::assertDispatched(SendToMSTeamsChannelJob::class);
 });
 
-it('can dispatch a job to send a message to slack using an alternative webhook url', function () {
-    config()->set('slack-alerts.webhook_urls.marketing', 'https://test-domain.com');
+it('can dispatch a job to send a message to msteams using an alternative webhook url', function () {
+    config()->set('msteams-alerts.webhook_urls.marketing', 'https://test-domain.com');
 
-    SlackAlert::to('marketing')->message('test-data');
+    MSTeamsAlert::to('marketing')->message('test-data');
 
-    Bus::assertDispatched(SendToSlackChannelJob::class);
+    Bus::assertDispatched(SendToMSTeamsChannelJob::class);
 });
 
 it('will throw an exception for a non existing job class', function () {
-    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
-    config()->set('slack-alerts.job', 'non-existing-job');
+    config()->set('msteams-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('msteams-alerts.job', 'non-existing-job');
 
-    SlackAlert::message('test-data');
+    MSTeamsAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
 
 
 it('will throw an exception for an invalid webhook url', function () {
-    config()->set('slack-alerts.webhook_urls.default', '');
+    config()->set('msteams-alerts.webhook_urls.default', '');
 
-    SlackAlert::message('test-data');
+    MSTeamsAlert::message('test-data');
 })->throws(WebhookUrlNotValid::class);
 
 it('will throw an exception for an invalid job class', function () {
-    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
-    config()->set('slack-alerts.job', '');
+    config()->set('msteams-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('msteams-alerts.job', '');
 
-    SlackAlert::message('test-data');
+    MSTeamsAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
 
 it('will throw an exception for a missing job class', function () {
-    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
-    config()->set('slack-alerts.job', null);
+    config()->set('msteams-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('msteams-alerts.job', null);
 
-    SlackAlert::message('test-data');
+    MSTeamsAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);

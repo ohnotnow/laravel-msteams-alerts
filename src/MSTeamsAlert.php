@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace Ohffs\MSTeamsAlerts;
 
-class SlackAlert
+class MSTeamsAlert
 {
     protected string $webhookUrlName = 'default';
 
