@@ -2,8 +2,8 @@
 
 namespace Ohffs\MSTeamsAlerts\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Ohffs\MSTeamsAlerts\MSTeamsAlertsServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
